@@ -32,7 +32,7 @@ class VAE(pl.LightningModule):
         return torch.sigmoid(self.fc4(h3))
 
     def loss_function(self, recon_x, x, mu, logvar):
-        BCE = F.binary_cross_entropy(recon_x, x.view(-1, 784), reduction='sum')
+        BCE = F.binary_cross_entropy_with_logits(recon_x, x.view(-1, 784), reduction='sum')
 
         # see Appendix B from VAE paper:
         # Kingma and Welling. Auto-Encoding Variational Bayes. ICLR, 2014
@@ -107,7 +107,7 @@ if __name__ == '__main__':
 
     parser = ArgumentParser()
     parser = pl.Trainer.add_argparse_args(parser)
-    parser.add_argument('--batch_size', default=32)
+    parser.add_argument('--batch_size', default=32, type=int)
     parser.add_argument('--learning_rate', default=1e-3, type=float)
 
     args = parser.parse_args()
