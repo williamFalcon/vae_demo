@@ -83,7 +83,7 @@ class VAE(pl.LightningModule):
         self.logger.experiment.add_image('images', grid, 0)
 
         log = {'avg_val_loss': val_loss}
-        return {'log': log, 'val_loss': log}
+        return {'log': log, 'val_loss': val_loss}
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.hparams.learning_rate)
